@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Text, View, StyleSheet, Animated } from "react-native";
 
-class TextAnimator extends React.Component {
+class SubTitleAnimator extends React.Component {
   animatedValues = [];
   animatedColorValues = [];
   animations = [];
@@ -34,19 +34,25 @@ class TextAnimator extends React.Component {
       const fadeInAnimation = Animated.timing(this.animatedValues[i], {
         toValue,
         duration: this.props.timing,
+        useNativeDriver: false,
       });
 
       // Color change animation
       const colorChangeAnimation = Animated.timing(
         this.animatedColorValues[i],
         {
-          toValue,
+          toValue, // Change color only for the last two elements
           duration: this.props.timing,
+          useNativeDriver: false,
         }
       );
 
       // Chain animations using Animated.sequence
-      return Animated.sequence([fadeInAnimation, colorChangeAnimation]);
+      return Animated.sequence([
+        Animated.delay(this.props.delay),
+        fadeInAnimation,
+        colorChangeAnimation,
+      ]);
     });
 
     Animated.stagger(
@@ -82,7 +88,7 @@ class TextAnimator extends React.Component {
                   ],
                   color: this.animatedColorValues[i].interpolate({
                     inputRange: [0, 1],
-                    outputRange: ["black", "red"], // Adjust the colors as needed
+                    outputRange: [this.props.color1, this.props.color2], // Adjust the colors as needed
                   }),
                 },
               ]}
@@ -97,12 +103,12 @@ class TextAnimator extends React.Component {
   }
 }
 
-TextAnimator.defaultProps = {
+SubTitleAnimator.defaultProps = {
   timing: 600,
   content: "",
 };
 
-export default TextAnimator;
+export default SubTitleAnimator;
 
 const styles = StyleSheet.create({
   textWrapper: {
