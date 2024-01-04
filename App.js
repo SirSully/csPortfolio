@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { StatusBar, Text, View, StyleSheet } from "react-native";
+import Constants from "expo-constants";
+import TextAnimator from "./components/TextAnimator";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <StatusBar hidden />
+        <TextAnimator
+          content="Hell️️️o, my name is Craig Sullivan."
+          textStyle={styles.textStyle}
+          style={styles.containerStyle}
+          timing={500}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: "#ecf0f1",
+    padding: 8,
+  },
+  containerStyle: {},
+  textStyle: {
+    fontSize: 28,
+    fontWeight: "bold",
+    fontFamily: "Menlo",
+    marginBottom: 14,
   },
 });
